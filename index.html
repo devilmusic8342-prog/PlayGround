@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#07080b" />
+  <title>NovaDroid — Virtual Android Cloud Phone</title>
+  <meta name="description" content="A clean web viewport for your Docker-Android noVNC cloud phone. Stream, control, and reconnect from one screen." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./assets/app.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b0d11'/%3E%3Crect x='21' y='10' width='22' height='44' rx='7' stroke='%237ef0b2' stroke-width='3' fill='none'/%3E%3Ccircle cx='32' cy='47' r='2.5' fill='%237ef0b2'/%3E%3C/svg%3E" />
+</head>
+<body class="min-h-dvh bg-ink font-sans text-zinc-100 antialiased selection:bg-mint/25 selection:text-white">
+
+  <!-- icon sprite -->
+  <svg aria-hidden="true" class="pointer-events-none absolute h-0 w-0 overflow-hidden">
+    <defs>
+      <symbol id="i-power" viewBox="0 0 24 24"><path d="M12 3v9"/><path d="M6.6 6.8a8 8 0 1 0 10.8 0"/></symbol>
+      <symbol id="i-volume-up" viewBox="0 0 24 24"><path d="M11 5 6.5 9H3v6h3.5L11 19z"/><path d="M15 9.5a4 4 0 0 1 0 5"/><path d="M17.8 6.7a8 8 0 0 1 0 10.6"/></symbol>
+      <symbol id="i-volume-down" viewBox="0 0 24 24"><path d="M11 5 6.5 9H3v6h3.5L11 19z"/><path d="M15 9.5a4 4 0 0 1 0 5"/></symbol>
+      <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10.8 9-7.8 9 7.8"/><path d="M5.5 9.2V21h13V9.2"/></symbol>
+      <symbol id="i-back" viewBox="0 0 24 24"><path d="M20 12H4"/><path d="m10 18-6-6 6-6"/></symbol>
+      <symbol id="i-recents" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="3"/><path d="M8 9h8"/><path d="M8 13h5"/></symbol>
+      <symbol id="i-rotate" viewBox="0 0 24 24"><path d="M20.5 12a8.5 8.5 0 1 1-2.5-6"/><path d="M20.5 3.5V9H15"/></symbol>
+      <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-.8 5"/><path d="M20 4v7h-7"/></symbol>
+      <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3a15 15 0 0 1 0 18a15 15 0 0 1 0-18z"/></symbol>
+      <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M3.5 8.5a13 13 0 0 1 17 0"/><path d="M6.5 12a8.5 8.5 0 0 1 11 0"/><path d="M9.5 15.5a4 4 0 0 1 5 0"/><circle cx="12" cy="19" r=".8" fill="currentColor" stroke="none"/></symbol>
+      <symbol id="i-battery" viewBox="0 0 28 14"><rect x="1" y="1" width="22" height="12" rx="3.2" fill="none"/><rect x="3.5" y="3.5" width="16" height="7" rx="1.3" fill="currentColor" stroke="none"/><path d="M25 5v4" stroke-width="2.4"/></symbol>
+      <symbol id="i-signal" viewBox="0 0 18 14"><rect x="1" y="9" width="3" height="4" rx="1" fill="currentColor" stroke="none"/><rect x="6" y="6" width="3" height="7" rx="1" fill="currentColor" stroke="none"/><rect x="11" y="3" width="3" height="10" rx="1" fill="currentColor" stroke="none"/><rect x="16" y="0" width="3" height="13" rx="1" fill="currentColor" stroke="none" opacity=".35"/></symbol>
+      <symbol id="i-cloud-off" viewBox="0 0 24 24"><path d="M6.8 6.8A5 5 0 0 0 7 16.7h9.2"/><path d="M8.5 4.6a5 5 0 0 1 7.8 3.9h.2a3.8 3.8 0 0 1 3.4 5.4"/><path d="m3 3 18 18"/></symbol>
+      <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M4 12h16"/><path d="m14 6 6 6-6 6"/></symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5"/><circle cx="12" cy="16.3" r=".8" fill="currentColor" stroke="none"/></symbol>
+      <symbol id="i-phone" viewBox="0 0 24 24"><path d="M7.2 3.5h2.6l1.3 4.1-2 1.4a14 14 0 0 0 6 6l1.4-2 4.1 1.3v2.6a2.1 2.1 0 0 1-2.3 2.1A17.3 17.3 0 0 1 5.1 5.8 2.1 2.1 0 0 1 7.2 3.5z"/></symbol>
+      <symbol id="i-message" viewBox="0 0 24 24"><path d="M20.5 11.5a8.3 8.3 0 0 1-12.2 7.3L4 20l1.3-4A8.3 8.3 0 1 1 20.5 11.5z"/><path d="M8.5 10.5h7"/><path d="M8.5 14h4.5"/></symbol>
+      <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8.5h3l1.4-2h7.2l1.4 2h3v10H4z"/><circle cx="12" cy="13" r="3.2"/></symbol>
+      <symbol id="i-photos" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4"/><circle cx="9" cy="9" r="1.5"/><path d="m4.5 17 4.3-4.2a2 2 0 0 1 2.8 0l5.9 6"/></symbol>
+      <symbol id="i-map" viewBox="0 0 24 24"><path d="m9 4-5 2v14l5-2 6 2 5-2V4l-5 2z"/><path d="M9 4v14"/><path d="M15 6v14"/></symbol>
+      <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 4.8v14.4L19 12z"/></symbol>
+      <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 13.5a7.8 7.8 0 0 0 0-3l2-1.5-2-3.4-2.3 1a8 8 0 0 0-2.6-1.5L13.7 2h-3.4l-.4 3.1a8 8 0 0 0-2.6 1.5l-2.3-1-2 3.4 2 1.5a7.8 7.8 0 0 0 0 3l-2 1.5 2 3.4 2.3-1a8 8 0 0 0 2.6 1.5l.4 3.1h3.4l.4-3.1a8 8 0 0 0 2.6-1.5l2.3 1 2-3.4z"/></symbol>
+      <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12z"/></symbol>
+      <symbol id="i-loader" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9" /></symbol>
+    </defs>
+  </svg>
+
+  <div class="page-ambient" aria-hidden="true">
+    <span class="ambient-orb ambient-orb--mint"></span>
+    <span class="ambient-orb ambient-orb--violet"></span>
+    <span class="ambient-grid"></span>
+  </div>
+
+  <header class="site-header">
+    <div class="mx-auto flex w-full max-w-[1240px] flex-wrap items-center gap-x-6 gap-y-3 px-4 py-3.5 sm:px-6 lg:py-4">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="4" width="14" height="24" rx="4.5"/>
+            <path d="M14 7h4"/>
+            <circle cx="16" cy="24.2" r=".9" fill="currentColor" stroke="none"/>
+          </svg>
+          <span class="brand-mark-dot"></span>
+        </span>
+        <span class="min-w-0">
+          <span class="flex items-baseline gap-2">
+            <span class="text-[15px] font-semibold tracking-[-0.015em] text-white">NovaDroid</span>
+            <span class="hidden rounded-md border border-white/10 bg-white/[0.04] px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.14em] text-zinc-400 sm:inline">v2.1</span>
+          </span>
+          <span class="mt-0.5 block text-[9px] font-medium uppercase tracking-[0.24em] text-zinc-500">Virtual cloud phone</span>
+        </span>
+      </div>
+
+      <form id="serverForm" class="server-bar order-3 w-full sm:order-2 sm:ml-auto sm:w-auto sm:max-w-[540px] sm:flex-1" novalidate>
+        <span class="server-icon" aria-hidden="true">
+          <svg class="h-4 w-4"><use href="#i-globe"/></svg>
+        </span>
+        <div class="min-w-0 flex-1">
+          <label for="serverUrl" class="block text-[8px] font-semibold uppercase tracking-[0.2em] text-zinc-500">Stream endpoint</label>
+          <input id="serverUrl" name="serverUrl" type="text" class="server-input" value="http://YOUR_VPS_IP:6080" placeholder="http://YOUR_VPS_IP:6080" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="VPS server IP or noVNC stream URL" />
+        </div>
+        <button id="reconnectBtn" type="submit" class="reconnect-btn" aria-label="Reconnect to the cloud phone stream">
+          <svg id="reconnectIcon" class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-refresh"/></svg>
+          <span id="reconnectLabel">Reconnect</span>
+        </button>
+      </form>
+
+      <div class="order-2 ml-auto flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] py-1.5 pl-2.5 pr-1.5 sm:order-3 sm:ml-0">
+        <span class="relative flex h-1.5 w-1.5">
+          <span id="headerPulse" class="absolute inline-flex h-full w-full rounded-full bg-zinc-500 opacity-60"></span>
+          <span id="headerDot" class="relative inline-flex h-1.5 w-1.5 rounded-full bg-zinc-500"></span>
+        </span>
+        <span id="headerState" class="text-[10px] font-medium uppercase tracking-[0.14em] text-zinc-400">Standby</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="relative z-10 mx-auto flex min-h-[calc(100dvh-73px)] w-full max-w-[1240px] items-start justify-center px-4 pb-10 pt-6 sm:px-6 sm:pt-8 md:items-center lg:pb-12 lg:pt-6">
+    <div class="flex w-full flex-col items-center gap-9 md:flex-row md:items-center md:justify-center md:gap-8 lg:gap-12 xl:gap-16">
+
+      <!-- ============ PHONE STAGE ============ -->
+      <section id="deviceStage" class="device-stage" aria-label="Android cloud phone">
+        <div class="stage-glow stage-glow--mint" aria-hidden="true"></div>
+        <div class="stage-glow stage-glow--violet" aria-hidden="true"></div>
+        <div id="deviceRotator" class="device-rotator">
+          <div id="phoneShell" class="phone-shell">
+            <!-- physical side keys -->
+            <button type="button" class="side-key side-key--power" data-action="power" aria-label="Power key" title="Power"></button>
+            <button type="button" class="side-key side-key--vol-up" data-action="volume-up" aria-label="Volume up" title="Volume up"></button>
+            <button type="button" class="side-key side-key--vol-down" data-action="volume-down" aria-label="Volume down" title="Volume down"></button>
+
+            <div class="phone-bezel">
+              <div id="phoneScreen" class="phone-screen">
+                <!-- Android home / standby -->
+                <div id="homeScreen" class="home-screen">
+                  <div class="wallpaper" aria-hidden="true">
+                    <span class="wp-orb wp-orb--1"></span>
+                    <span class="wp-orb wp-orb--2"></span>
+                    <span class="wp-orb wp-orb--3"></span>
+                    <span class="wp-haze"></span>
+                    <span class="wp-grain"></span>
+                  </div>
+
+                  <div class="status-bar">
+                    <span id="statusClock" class="status-time">9:41</span>
+                    <span class="status-icons">
+                      <svg class="h-2.5 w-3.5"><use href="#i-signal"/></svg>
+                      <svg class="h-2.5 w-3"><use href="#i-wifi"/></svg>
+                      <svg class="h-2.5 w-4"><use href="#i-battery"/></svg>
+                    </span>
+                  </div>
+
+                  <div class="home-content">
+                    <div class="flex items-end justify-between px-1">
+                      <div>
+                        <div id="homeClock" class="home-clock">9:41</div>
+                        <div id="homeDate" class="home-date">Friday, October 30</div>
+                      </div>
+                      <div class="weather-chip">
+                        <svg viewBox="0 0 24 24" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="3.6"/><path d="M12 2.8v2M12 19.2v2M2.8 12h2M19.2 12h2M5.5 5.5l1.4 1.4M17.1 17.1l1.4 1.4M18.5 5.5l-1.4 1.4M6.9 17.1l-1.4 1.4"/></svg>
+                        <span>18°</span>
+                      </div>
+                    </div>
+
+                    <div class="app-grid">
+                      <div class="app" aria-label="Phone"><span class="app-tile tile-green"><svg><use href="#i-phone"/></svg></span><span class="app-label">Phone</span></div>
+                      <div class="app" aria-label="Messages"><span class="app-tile tile-blue"><svg><use href="#i-message"/></svg></span><span class="app-label">Messages</span></div>
+                      <div class="app" aria-label="Browser"><span class="app-tile tile-sky"><svg><use href="#i-globe"/></svg></span><span class="app-label">Browser</span></div>
+                      <div class="app" aria-label="Camera"><span class="app-tile tile-rose"><svg><use href="#i-camera"/></svg></span><span class="app-label">Camera</span></div>
+                      <div class="app" aria-label="Photos"><span class="app-tile tile-amber"><svg><use href="#i-photos"/></svg></span><span class="app-label">Photos</span></div>
+                      <div class="app" aria-label="Maps"><span class="app-tile tile-teal"><svg><use href="#i-map"/></svg></span><span class="app-label">Maps</span></div>
+                      <div class="app" aria-label="Play Store"><span class="app-tile tile-violet"><svg><use href="#i-play"/></svg></span><span class="app-label">Play</span></div>
+                      <div class="app" aria-label="Settings"><span class="app-tile tile-slate"><svg><use href="#i-settings"/></svg></span><span class="app-label">Settings</span></div>
+                    </div>
+                  </div>
+
+                  <div id="offlineCard" class="offline-card" data-state="idle">
+                    <div class="flex items-start gap-3">
+                      <span id="offlineIcon" class="offline-icon">
+                        <svg class="h-4 w-4"><use href="#i-cloud-off"/></svg>
+                      </span>
+                      <div class="min-w-0 flex-1">
+                        <p id="offlineTitle" class="text-[12px] font-semibold tracking-[-0.01em] text-white">VPS stream offline</p>
+                        <p id="offlineBody" class="mt-0.5 text-[10px] leading-[1.45] text-zinc-400">Add your noVNC endpoint to start streaming this device.</p>
+                      </div>
+                    </div>
+                    <button id="offlineAction" type="button" class="offline-action">
+                      <span id="offlineActionLabel">Connect</span>
+                      <svg class="h-3 w-3"><use href="#i-arrow-right"/></svg>
+                    </button>
+                  </div>
+
+                  <div class="dock" aria-hidden="true">
+                    <span class="app-tile app-tile--dock tile-green"><svg><use href="#i-phone"/></svg></span>
+                    <span class="app-tile app-tile--dock tile-blue"><svg><use href="#i-message"/></svg></span>
+                    <span class="app-tile app-tile--dock tile-sky"><svg><use href="#i-globe"/></svg></span>
+                    <span class="app-tile app-tile--dock tile-rose"><svg><use href="#i-camera"/></svg></span>
+                  </div>
+                  <span class="gesture-pill" aria-hidden="true"></span>
+                </div>
+
+                <!-- noVNC render target -->
+                <div id="vncViewport" class="vnc-viewport" aria-label="Android device stream"></div>
+
+                <!-- connecting state -->
+                <div id="connectingOverlay" class="connecting-overlay" aria-live="polite">
+                  <div class="connecting-card">
+                    <span class="spinner-ring" aria-hidden="true"></span>
+                    <p class="text-[12px] font-semibold text-white">Connecting to device</p>
+                    <p id="connectingHost" class="mt-1 max-w-[190px] truncate font-mono text-[9px] text-zinc-400">YOUR_VPS_IP:6080</p>
+                    <div class="connecting-bars" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+                    <button id="cancelConnect" type="button" class="connecting-cancel">Cancel</button>
+                  </div>
+                </div>
+
+                <div class="screen-reflection" aria-hidden="true"></div>
+                <div class="punch-hole" aria-hidden="true"><span></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="stage-caption">
+          <span class="caption-dot"></span>
+          <span>Pixel 7 Pro</span>
+          <span class="caption-sep">/</span>
+          <span class="font-mono text-[9px] text-zinc-600">ANDROID 13</span>
+        </div>
+      </section>
+
+      <!-- ============ CONTROL RAIL ============ -->
+      <aside class="control-rail" aria-label="Device controls">
+        <div class="rail-panel">
+          <div class="flex items-center justify-between">
+            <h1 class="text-[11px] font-semibold uppercase tracking-[0.2em] text-zinc-400">Device controls</h1>
+            <span class="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.12em] text-zinc-500">
+              <span class="h-1 w-1 rounded-full bg-mint/70"></span> noVNC
+            </span>
+          </div>
+
+          <div id="statusCard" class="status-card" data-state="offline">
+            <div class="flex items-center justify-between">
+              <span class="text-[9px] font-semibold uppercase tracking-[0.18em] text-zinc-500">Stream status</span>
+              <span id="signalBars" class="signal-bars" aria-hidden="true">
+                <span></span><span></span><span></span><span></span>
+              </span>
+            </div>
+            <div class="mt-2.5 flex items-end justify-between gap-3">
+              <span id="statusBadge" class="status-badge">
+                <span class="status-dot"></span>
+                <span id="statusText">Disconnected</span>
+              </span>
+              <span class="text-right">
+                <span id="pingText" class="block font-mono text-[15px] font-medium leading-none text-zinc-300">—<span class="ml-1 text-[9px] font-normal text-zinc-500">ms</span></span>
+                <span id="qualityText" class="mt-1 block text-[8px] font-semibold uppercase tracking-[0.16em] text-zinc-600">Offline</span>
+              </span>
+            </div>
+            <div class="latency-meter" aria-hidden="true"><span id="latencyFill"></span></div>
+            <div class="mt-2 flex items-center justify-between gap-2 font-mono text-[9px] text-zinc-600">
+              <span id="statusHint" class="truncate">Waiting for endpoint</span>
+              <span id="statusHost" class="shrink-0 text-zinc-700">6080</span>
+            </div>
+          </div>
+
+          <div class="mt-2 grid grid-cols-2 gap-1.5 md:grid-cols-1">
+            <button type="button" class="action-btn action-btn--power" data-action="power">
+              <span class="action-icon"><svg><use href="#i-power"/></svg></span>
+              <span class="action-label">Power</span>
+              <span class="action-meta">Wake / sleep</span>
+            </button>
+            <button type="button" class="action-btn" data-action="volume-up">
+              <span class="action-icon"><svg><use href="#i-volume-up"/></svg></span>
+              <span class="action-label">Volume up</span>
+              <span class="action-meta">Raise</span>
+            </button>
+            <button type="button" class="action-btn" data-action="volume-down">
+              <span class="action-icon"><svg><use href="#i-volume-down"/></svg></span>
+              <span class="action-label">Volume down</span>
+              <span class="action-meta">Lower</span>
+            </button>
+            <button type="button" class="action-btn" data-action="home">
+              <span class="action-icon"><svg><use href="#i-home"/></svg></span>
+              <span class="action-label">Home</span>
+              <span class="action-meta">Home</span>
+            </button>
+            <button type="button" class="action-btn" data-action="back">
+              <span class="action-icon"><svg><use href="#i-back"/></svg></span>
+              <span class="action-label">Back</span>
+              <span class="action-meta">Esc</span>
+            </button>
+            <button type="button" class="action-btn" data-action="recents">
+              <span class="action-icon"><svg><use href="#i-recents"/></svg></span>
+              <span class="action-label">Recent apps</span>
+              <span class="action-meta">Overview</span>
+            </button>
+            <button type="button" class="action-btn action-btn--wide" data-action="rotate" aria-pressed="false">
+              <span class="action-icon"><svg><use href="#i-rotate"/></svg></span>
+              <span class="action-label">Rotate screen</span>
+              <span class="action-meta" id="rotateMeta">Portrait</span>
+            </button>
+          </div>
+
+          <div class="rail-footer">
+            <span class="flex items-center gap-1.5"><span class="h-1 w-1 rounded-full bg-zinc-600"></span> WebSocket 6080</span>
+            <span class="font-mono">Docker-Android</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite">
+    <span id="toastIcon" class="toast-icon"><svg class="h-4 w-4"><use href="#i-bolt"/></svg></span>
+    <span id="toastText" class="text-[11px] font-medium text-zinc-200">Ready</span>
+  </div>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
