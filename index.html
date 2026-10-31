@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#040608" />
+    <meta name="description" content="Nimbus — a focused virtual Android cloud phone workspace." />
+    <title>Nimbus — Android Cloud Phone</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23060d0b'/%3E%3Crect x='9' y='5.5' width='14' height='21' rx='4' fill='none' stroke='%2369e9b6' stroke-width='1.6'/%3E%3Cpath d='M13 9h6' stroke='%2369e9b6' stroke-width='1.3' stroke-linecap='round' opacity='.6'/%3E%3Ccircle cx='16' cy='23' r='1.2' fill='%2369e9b6'/%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="min-h-screen bg-ink-950 font-sans text-slate-100 antialiased selection:bg-mint-400/30 selection:text-white">
+    <svg xmlns="http://www.w3.org/2000/svg" class="absolute h-0 w-0 overflow-hidden" aria-hidden="true">
+      <symbol id="i-smartphone" viewBox="0 0 24 24">
+        <rect x="6.5" y="2.5" width="11" height="19" rx="2.7" />
+        <path d="M10.5 18.5h3" />
+      </symbol>
+      <symbol id="i-globe" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="8.7" />
+        <path d="M3.5 12h17M12 3.3c2.35 2.4 3.7 5.5 3.7 8.7S14.35 18.3 12 20.7C9.65 18.3 8.3 15.2 8.3 12S9.65 5.7 12 3.3Z" />
+      </symbol>
+      <symbol id="i-refresh" viewBox="0 0 24 24">
+        <path d="M20 11.2a8 8 0 1 0-2.34 5.66" />
+        <path d="M20 4.2v7h-7" />
+      </symbol>
+      <symbol id="i-cloud-off" viewBox="0 0 24 24">
+        <path d="m3 3 18 18" />
+        <path d="M5.8 17.9A5 5 0 0 1 7 8.15 6.5 6.5 0 0 1 17.35 7.4 4.8 4.8 0 0 1 20.5 16" />
+        <path d="M16 20H7" />
+      </symbol>
+      <symbol id="i-wifi" viewBox="0 0 24 24">
+        <path d="M4.8 12.2a10.4 10.4 0 0 1 14.4 0" />
+        <path d="M8.2 15.6a5.6 5.6 0 0 1 7.6 0" />
+        <circle cx="12" cy="19" r="1.1" fill="currentColor" stroke="none" />
+      </symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="4.1" />
+        <path d="M12 2v2.2M12 19.8V22M4.93 4.93l1.56 1.56M17.51 17.51l1.56 1.56M2 12h2.2M19.8 12H22M4.93 19.07l1.56-1.56M17.51 6.49l1.56-1.56" />
+      </symbol>
+      <symbol id="i-search" viewBox="0 0 24 24">
+        <circle cx="10.8" cy="10.8" r="6.8" />
+        <path d="m16 16 5 5" />
+      </symbol>
+      <symbol id="i-mic" viewBox="0 0 24 24">
+        <rect x="9" y="2.8" width="6" height="11" rx="3" />
+        <path d="M5.8 11.5a6.2 6.2 0 0 0 12.4 0M12 17.7v3.5" />
+      </symbol>
+      <symbol id="i-power" viewBox="0 0 24 24">
+        <path d="M12 2.5v8.8" />
+        <path d="M6.55 5.9a8.2 8.2 0 1 0 10.9 0" />
+      </symbol>
+      <symbol id="i-rotate" viewBox="0 0 24 24">
+        <path d="M20.2 7.2h-5.4V1.8" />
+        <path d="M20.2 7.2a8.4 8.4 0 1 0 1.4 8" />
+      </symbol>
+      <symbol id="i-volume-up" viewBox="0 0 24 24">
+        <path d="M11.4 4.8 6.7 8.7H3.2v6.6h3.5l4.7 3.9V4.8Z" />
+        <path d="M15.2 8.4a5.2 5.2 0 0 1 0 7.2M18 5.7a9 9 0 0 1 0 12.6" />
+      </symbol>
+      <symbol id="i-volume-down" viewBox="0 0 24 24">
+        <path d="M11.4 4.8 6.7 8.7H3.2v6.6h3.5l4.7 3.9V4.8Z" />
+        <path d="M15.2 8.4a5.2 5.2 0 0 1 0 7.2M18.2 12h4" />
+      </symbol>
+      <symbol id="i-home" viewBox="0 0 24 24">
+        <path d="m3.8 10.5 8.2-7 8.2 7" />
+        <path d="M5.8 9v11.2h12.4V9M10 20.2v-6h4v6" />
+      </symbol>
+      <symbol id="i-back" viewBox="0 0 24 24">
+        <path d="M19 12H5M11 6l-6 6 6 6" />
+      </symbol>
+      <symbol id="i-recents" viewBox="0 0 24 24">
+        <rect x="6" y="6" width="12" height="12" rx="2.4" />
+        <path d="M9.2 3.8H18a2.2 2.2 0 0 1 2.2 2.2v8.8" />
+      </symbol>
+      <symbol id="i-activity" viewBox="0 0 24 24">
+        <path d="M2.5 12h4l2.2-5.5 4.2 11 2.2-5.5h6.4" />
+      </symbol>
+      <symbol id="i-chevron-right" viewBox="0 0 24 24">
+        <path d="m9 5 7 7-7 7" />
+      </symbol>
+      <symbol id="i-arrow-up-right" viewBox="0 0 24 24">
+        <path d="M7 17 17 7M8 7h9v9" />
+      </symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24">
+        <rect x="4.8" y="10.2" width="14.4" height="10.5" rx="3" />
+        <path d="M8.4 10V7.6a3.6 3.6 0 0 1 7.2 0V10" />
+      </symbol>
+      <symbol id="i-check" viewBox="0 0 24 24">
+        <path d="m4.5 12.5 5 5 10-11" />
+      </symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24">
+        <path d="M12 3.5 21.2 20H2.8L12 3.5Z" />
+        <path d="M12 9v4.6M12 17.1v.1" />
+      </symbol>
+      <symbol id="i-message" viewBox="0 0 24 24">
+        <path d="M20.8 11.5a8.2 8.2 0 0 1-9 8.1 9.2 9.2 0 0 1-3.7-.8L3.2 20.5l1.4-4a8.3 8.3 0 1 1 16.2-5Z" />
+      </symbol>
+      <symbol id="i-compass" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="8.8" />
+        <path d="m15.8 8.2-2.1 5.5-5.5 2.1 2.1-5.5 5.5-2.1Z" />
+      </symbol>
+      <symbol id="i-camera" viewBox="0 0 24 24">
+        <path d="M4.5 7.7h3l1.3-2h6.4l1.3 2h3a1.5 1.5 0 0 1 1.5 1.5v8.3a1.5 1.5 0 0 1-1.5 1.5h-15a1.5 1.5 0 0 1-1.5-1.5V9.2a1.5 1.5 0 0 1 1.5-1.5Z" />
+        <circle cx="12" cy="13.2" r="3.2" />
+      </symbol>
+      <symbol id="i-image" viewBox="0 0 24 24">
+        <rect x="3" y="4" width="18" height="16" rx="3" />
+        <circle cx="8.4" cy="9.2" r="1.5" />
+        <path d="m4.5 17 4.8-4.6 3.6 3.3 2.8-2.5 3.8 3.8" />
+      </symbol>
+      <symbol id="i-pin" viewBox="0 0 24 24">
+        <path d="M19.5 10.3c0 5.2-7.5 10.5-7.5 10.5S4.5 15.5 4.5 10.3a7.5 7.5 0 1 1 15 0Z" />
+        <circle cx="12" cy="10.2" r="2.6" />
+      </symbol>
+      <symbol id="i-play" viewBox="0 0 24 24">
+        <path d="m8.5 5.5 10 6.5-10 6.5v-13Z" />
+      </symbol>
+      <symbol id="i-settings" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="3" />
+        <path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-2.86 2.86-.06-.06A1.7 1.7 0 0 0 15 19.4a1.7 1.7 0 0 0-1 .6 1.7 1.7 0 0 0-.4 1.1V21H9.6v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.88.34l-.06.06-2.86-2.86.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-.6-1 1.7 1.7 0 0 0-1.1-.4H3V9.6h.1A1.7 1.7 0 0 0 4.6 8.5a1.7 1.7 0 0 0-.34-1.88L4.2 6.56 7.06 3.7l.06.06A1.7 1.7 0 0 0 9 4.1a1.7 1.7 0 0 0 1-.6 1.7 1.7 0 0 0 .4-1.1V2.3h4v.1A1.7 1.7 0 0 0 15.5 4a1.7 1.7 0 0 0 1.88-.34l.06-.06 2.86 2.86-.06.06A1.7 1.7 0 0 0 19.9 8.5a1.7 1.7 0 0 0 .6 1 1.7 1.7 0 0 0 1.1.4h.1v4h-.1a1.7 1.7 0 0 0-1.5.6Z" />
+      </symbol>
+      <symbol id="i-calendar" viewBox="0 0 24 24">
+        <rect x="3.5" y="5" width="17" height="15.5" rx="3" />
+        <path d="M3.8 9.7h16.4M8 3.2v3.5M16 3.2v3.5" />
+      </symbol>
+      <symbol id="i-folder" viewBox="0 0 24 24">
+        <path d="M3.2 6.8A2.3 2.3 0 0 1 5.5 4.5h4l2 2.4h6.9a2.3 2.3 0 0 1 2.3 2.3v8.2a2.3 2.3 0 0 1-2.3 2.3H5.5a2.3 2.3 0 0 1-2.3-2.3V6.8Z" />
+      </symbol>
+      <symbol id="i-mail" viewBox="0 0 24 24">
+        <rect x="3" y="5" width="18" height="14" rx="3" />
+        <path d="m4 7 8 6 8-6" />
+      </symbol>
+      <symbol id="i-dots" viewBox="0 0 24 24">
+        <circle cx="5" cy="12" r="1.3" fill="currentColor" stroke="none" />
+        <circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none" />
+        <circle cx="19" cy="12" r="1.3" fill="currentColor" stroke="none" />
+      </symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24">
+        <path d="M12 2.6 20 6v5.7c0 4.7-3.4 8.2-8 9.7-4.6-1.5-8-5-8-9.7V6l8-3.4Z" />
+        <path d="m8.8 12 2.1 2.2 4.4-4.5" />
+      </symbol>
+    </svg>
+
+    <div class="ambient-shell" aria-hidden="true">
+      <div class="ambient-grid"></div>
+      <div class="ambient-orb ambient-orb--mint"></div>
+      <div class="ambient-orb ambient-orb--blue"></div>
+      <div class="ambient-beam"></div>
+      <div class="ambient-noise"></div>
+    </div>
+
+    <div class="relative z-10 flex min-h-dvh flex-col">
+      <header class="header">
+        <div class="mx-auto flex w-full max-w-[1480px] flex-wrap items-center gap-x-4 gap-y-4 px-5 py-[13px] sm:px-7 lg:flex-nowrap lg:px-10">
+          <a href="/" class="brand shrink-0" aria-label="Nimbus cloud phone home">
+            <span class="brand-mark" aria-hidden="true">
+              <span class="brand-mark-glow"></span>
+              <svg class="brand-mark-icon" viewBox="0 0 40 40" fill="none">
+                <rect x="11.2" y="6.5" width="17.6" height="27" rx="5.2" stroke="currentColor" stroke-width="1.6" />
+                <path d="M16.2 10.8h7.6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" opacity=".65" />
+                <circle cx="20" cy="28.2" r="1.35" fill="currentColor" />
+                <path d="M29.4 11.2a9 9 0 0 1 0 17.6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity=".3" />
+                <path d="M10.6 11.2a9 9 0 0 0 0 17.6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" opacity=".3" />
+              </svg>
+            </span>
+            <span class="flex flex-col leading-none">
+              <span class="text-[19px] font-semibold tracking-[-0.035em] text-white">Nimbus</span>
+              <span class="mt-[5px] text-[8px] font-bold uppercase tracking-[0.27em] text-mint-300/55">Android cloud</span>
+            </span>
+          </a>
+
+          <form id="connectForm" class="ml-auto flex w-full min-w-0 items-end gap-2.5 sm:gap-3 lg:w-auto lg:max-w-[690px] lg:flex-1">
+            <label for="endpoint" class="min-w-0 flex-1">
+              <span class="mb-1.5 flex items-center justify-between px-0.5 text-[8.5px] font-bold uppercase tracking-[0.2em] text-white/32">
+                <span>Stream endpoint</span>
+                <span class="hidden font-medium normal-case tracking-[0.02em] text-white/22 sm:inline">VPS IP + noVNC port</span>
+              </span>
+              <span class="endpoint-box" id="endpointBox">
+                <svg class="endpoint-icon" aria-hidden="true"><use href="#i-globe" /></svg>
+                <input
+                  id="endpoint"
+                  name="endpoint"
+                  type="text"
+                  inputmode="url"
+                  enterkeyhint="go"
+                  autocomplete="off"
+                  autocapitalize="off"
+                  spellcheck="false"
+                  placeholder="http://YOUR_VPS_IP:6080"
+                  aria-label="VPS server IP or noVNC stream URL"
+                />
+                <span class="protocol-badge" id="protocolBadge">
+                  <span class="protocol-dot"></span>
+                  noVNC
+                </span>
+              </span>
+            </label>
+            <button type="submit" class="reconnect-button group" id="reconnectButton">
+              <svg class="reconnect-icon" aria-hidden="true"><use href="#i-refresh" /></svg>
+              <span class="reconnect-label">Reconnect</span>
+            </button>
+          </form>
+        </div>
+      </header>
+
+      <main class="relative flex flex-1 items-center justify-center px-5 pb-8 pt-7 sm:px-7 lg:px-10 lg:pb-10 lg:pt-4">
+        <div class="mx-auto flex w-full max-w-[1120px] flex-col items-center justify-center gap-10 lg:flex-row lg:items-center lg:gap-10 xl:gap-12">
+          <section class="phone-stage" id="phoneStage" aria-label="Virtual Android phone">
+            <div class="phone-halo" aria-hidden="true"></div>
+            <div class="orbit orbit--one" aria-hidden="true"></div>
+            <div class="orbit orbit--two" aria-hidden="true"></div>
+
+            <div class="device" id="device">
+              <span class="device-key device-key--volume" aria-hidden="true"></span>
+              <span class="device-key device-key--power" aria-hidden="true"></span>
+              <span class="camera-hole" aria-hidden="true"><span></span></span>
+
+              <div class="device-screen" id="deviceScreen">
+                <div class="screen-demo" id="demoScreen">
+                  <div class="demo-wallpaper" aria-hidden="true">
+                    <span class="wallpaper-orb wallpaper-orb--one"></span>
+                    <span class="wallpaper-orb wallpaper-orb--two"></span>
+                    <span class="wallpaper-orb wallpaper-orb--three"></span>
+                    <span class="wallpaper-arc"></span>
+                  </div>
+
+                  <div class="demo-statusbar">
+                    <span class="demo-time">9:41</span>
+                    <span class="demo-signal-icons">
+                      <span class="demo-network">5G</span>
+                      <svg aria-hidden="true"><use href="#i-wifi" /></svg>
+                      <span class="demo-signal-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+                      <span class="demo-battery" aria-hidden="true"><i></i></span>
+                    </span>
+                  </div>
+
+                  <span class="demo-preview-pill" id="previewPill"><span></span> Preview</span>
+
+                  <div class="demo-hero">
+                    <p class="demo-date">Saturday, 31 October</p>
+                    <p class="demo-clock">9:41</p>
+                    <div class="demo-weather">
+                      <svg aria-hidden="true"><use href="#i-sun" /></svg>
+                      <span class="demo-temp">18°</span>
+                      <span class="demo-condition">Partly cloudy</span>
+                    </div>
+                  </div>
+
+                  <div class="demo-apps" aria-hidden="true">
+                    <div class="demo-app">
+                      <span class="app-icon app-icon--phone"><svg><use href="#i-smartphone" /></svg></span>
+                      <span class="app-label">Phone</span>
+                    </div>
+                    <div class="demo-app">
+                      <span class="app-icon app-icon--messages"><svg><use href="#i-message" /></svg></span>
+                      <span class="app-label">Messages</span>
+                    </div>
+                    <div class="demo-app">
+                      <span class="app-icon app-icon--chrome"><span class="chrome-ring"></span></span>
+                      <span class="app-label">Chrome</span>
+                    </div>
+                    <div class="demo-app">
+                      <span class="app-icon app-icon--camera"><svg><use href="#i-camera" /></svg></span>
+                      <span class="app-label">Camera</span>
+                    </div>
+                    <div class="demo-app">
+                      <span class="app-icon app-icon--photos"><span class="photos-pinwheel"></span></span>
+                      <span class="app-label">Photos</span>
+                    </div>
+                    <div class="demo-app">
+                      <span class="app-icon app-icon--maps"><svg><use href="#i-pin" /></svg></span>
+                      <span class="app-label">Maps</span>
+                    </div>
+                    <div class="demo-app">
+                      <span class="app-icon app-icon--play"><svg><use href="#i-play" /></svg></span>
+                      <span class="app-label">Play</span>
+                    </div>
+                    <div class="demo-app">
+                      <span class="app-icon app-icon--settings"><svg><use href="#i-settings" /></svg></span>
+                      <span class="app-label">Settings</span>
+                    </div>
+                    <div class="demo-app">
+                      <span class="app-icon app-icon--calendar"><svg><use href="#i-calendar" /></svg></span>
+                      <span class="app-label">Calendar</span>
+                    </div>
+                    <div class="demo-app">
+                      <span class="app-icon app-icon--files"><svg><use href="#i-folder" /></svg></span>
+                      <span class="app-label">Files</span>
+                    </div>
+                    <div class="demo-app">
+                      <span class="app-icon app-icon--mail"><svg><use href="#i-mail" /></svg></span>
+                      <span class="app-label">Gmail</span>
+                    </div>
+                    <div class="demo-app">
+                      <span class="app-icon app-icon--more"><svg><use href="#i-dots" /></svg></span>
+                      <span class="app-label">More</span>
+                    </div>
+                  </div>
+
+                  <button class="preview-connect" id="previewConnect" type="button">
+                    <span class="preview-connect-icon"><svg aria-hidden="true"><use href="#i-cloud-off" /></svg></span>
+                    <span class="min-w-0 flex-1 text-left">
+                      <span class="preview-connect-title">No live stream</span>
+                      <span class="preview-connect-sub">Set an endpoint to connect</span>
+                    </span>
+                    <svg class="preview-connect-arrow" aria-hidden="true"><use href="#i-chevron-right" /></svg>
+                  </button>
+
+                  <div class="demo-search" aria-hidden="true">
+                    <span class="demo-google">G</span>
+                    <span>Search your cloud phone</span>
+                    <svg class="demo-mic"><use href="#i-mic" /></svg>
+                  </div>
+
+                  <div class="demo-dock" aria-hidden="true">
+                    <span class="app-icon app-icon--phone"><svg><use href="#i-smartphone" /></svg></span>
+                    <span class="app-icon app-icon--messages"><svg><use href="#i-message" /></svg></span>
+                    <span class="app-icon app-icon--chrome"><span class="chrome-ring"></span></span>
+                    <span class="app-icon app-icon--camera"><svg><use href="#i-camera" /></svg></span>
+                  </div>
+
+                  <div class="demo-navbar" aria-hidden="true"><span></span></div>
+                </div>
+
+                <iframe
+                  id="streamFrame"
+                  title="Android cloud phone noVNC stream"
+                  src="about:blank"
+                  data-default-target="http://YOUR_VPS_IP:6080"
+                  allow="clipboard-read; clipboard-write; fullscreen"
+                  referrerpolicy="no-referrer"
+                ></iframe>
+
+                <div class="stream-loading" id="streamLoading" role="status" aria-live="polite">
+                  <span class="stream-loader" aria-hidden="true"><i></i><i></i></span>
+                  <span class="stream-loading-title">Linking to device</span>
+                  <span class="stream-loading-host" id="loadingHost">noVNC endpoint</span>
+                </div>
+
+                <div class="screen-sleep" id="sleepOverlay" role="button" tabindex="-1" aria-label="Wake phone screen" aria-hidden="true">
+                  <div class="sleep-top">
+                    <svg aria-hidden="true"><use href="#i-lock" /></svg>
+                    <span>Nimbus cloud phone</span>
+                  </div>
+                  <div class="sleep-center">
+                    <p class="sleep-time" id="sleepTime">9:41</p>
+                    <p class="sleep-date">Saturday, 31 October</p>
+                  </div>
+                  <p class="sleep-hint">Tap anywhere to wake</p>
+                </div>
+
+                <div class="volume-hud" id="volumeHud" aria-hidden="true">
+                  <svg><use href="#i-volume-up" /></svg>
+                  <div class="volume-track"><span id="volumeFill"></span></div>
+                  <span class="volume-value" id="volumeValue">60</span>
+                </div>
+
+                <div class="screen-reflection" aria-hidden="true"></div>
+              </div>
+            </div>
+
+            <div class="phone-meta">
+              <span class="phone-meta-item"><span class="meta-dot"></span> Pixel 8 Pro</span>
+              <span class="phone-meta-divider"></span>
+              <span class="phone-meta-item font-mono" id="resolutionText">1080 × 2400</span>
+              <span class="phone-meta-divider"></span>
+              <span class="phone-meta-item">Android 14</span>
+            </div>
+          </section>
+
+          <aside class="controls-panel" aria-label="Device quick controls">
+            <div class="panel-glow" aria-hidden="true"></div>
+            <div class="relative z-10">
+              <div class="flex items-start justify-between">
+                <div>
+                  <p class="panel-overline">QUICK ACTIONS</p>
+                  <h1 class="mt-1 text-[19px] font-semibold tracking-[-0.03em] text-white">Device controls</h1>
+                </div>
+                <span class="device-chip">P8</span>
+              </div>
+
+              <div class="status-badge" id="statusBadge" data-state="disconnected" aria-live="polite">
+                <span class="status-dot-wrap" aria-hidden="true"><span class="status-dot"></span><span class="status-ping"></span></span>
+                <div class="min-w-0">
+                  <p class="status-label" id="statusLabel">Disconnected</p>
+                  <p class="status-sub" id="statusSub">Awaiting endpoint</p>
+                </div>
+                <div class="status-latency">
+                  <svg aria-hidden="true"><use href="#i-activity" /></svg>
+                  <span class="ping-value" id="pingValue">—</span>
+                  <span class="ping-unit">ms</span>
+                </div>
+              </div>
+
+              <div class="control-section-label">
+                <span>Hardware</span>
+                <span class="control-section-rule"></span>
+              </div>
+
+              <div class="control-grid">
+                <button type="button" class="action-key action-key--power col-span-2" data-command="power" id="powerButton" aria-pressed="false">
+                  <span class="key-icon key-icon--power"><svg aria-hidden="true"><use href="#i-power" /></svg></span>
+                  <span class="key-copy">
+                    <span class="key-label">Power</span>
+                    <span class="key-hint">Sleep / wake</span>
+                  </span>
+                  <span class="key-signal" aria-hidden="true"></span>
+                </button>
+
+                <button type="button" class="action-key action-key--rotate col-span-2" data-command="rotate" id="rotateButton" aria-pressed="false">
+                  <span class="key-icon"><svg aria-hidden="true"><use href="#i-rotate" /></svg></span>
+                  <span class="key-copy">
+                    <span class="key-label">Rotate screen</span>
+                    <span class="key-hint">Portrait view</span>
+                  </span>
+                </button>
+
+                <button type="button" class="action-key action-key--volume" data-command="volume-down" id="volumeDownButton">
+                  <span class="key-icon"><svg aria-hidden="true"><use href="#i-volume-down" /></svg></span>
+                  <span class="key-copy">
+                    <span class="key-label">Volume down</span>
+                  </span>
+                </button>
+
+                <button type="button" class="action-key action-key--volume" data-command="volume-up" id="volumeUpButton">
+                  <span class="key-icon"><svg aria-hidden="true"><use href="#i-volume-up" /></svg></span>
+                  <span class="key-copy">
+                    <span class="key-label">Volume up</span>
+                  </span>
+                </button>
+              </div>
+
+              <div class="control-section-label mt-4">
+                <span>Navigation</span>
+                <span class="control-section-rule"></span>
+              </div>
+
+              <div class="nav-grid">
+                <button type="button" class="nav-key" data-command="back" aria-label="Back">
+                  <svg aria-hidden="true"><use href="#i-back" /></svg>
+                  <span>Back</span>
+                </button>
+                <button type="button" class="nav-key nav-key--home" data-command="home" aria-label="Home">
+                  <svg aria-hidden="true"><use href="#i-home" /></svg>
+                  <span>Home</span>
+                </button>
+                <button type="button" class="nav-key" data-command="recents" aria-label="Recent apps">
+                  <svg aria-hidden="true"><use href="#i-recents" /></svg>
+                  <span>Recents</span>
+                </button>
+              </div>
+
+              <div class="panel-footer">
+                <span class="flex min-w-0 items-center gap-2">
+                  <span class="footer-device-icon"><svg aria-hidden="true"><use href="#i-smartphone" /></svg></span>
+                  <span class="truncate">Pixel 8 Pro · 1080p</span>
+                </span>
+                <span class="flex shrink-0 items-center gap-1.5 text-mint-300/55">
+                  <svg class="h-3 w-3" aria-hidden="true"><use href="#i-shield" /></svg>
+                  <span class="font-mono text-[8.5px] tracking-[0.08em]">noVNC</span>
+                </span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </main>
+
+      <div class="pointer-events-none hidden w-full items-center justify-between px-10 pb-5 text-[8.5px] font-semibold uppercase tracking-[0.2em] text-white/18 lg:flex">
+        <span>Virtual Android workspace</span>
+        <span class="flex items-center gap-2"><span class="h-[3px] w-[3px] rounded-full bg-mint-300/40"></span> Hosted on your VPS</span>
+      </div>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite">
+      <span class="toast-icon" id="toastIcon"><svg aria-hidden="true"><use href="#i-check" /></svg></span>
+      <span class="min-w-0">
+        <span class="toast-title" id="toastTitle">Command sent</span>
+        <span class="toast-message" id="toastMessage">Your cloud device received the input.</span>
+      </span>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
